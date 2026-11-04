@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Trail · Director, Internal Communications · Cisco</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #d4d2cc;
+    --surface: #f7f5f1;
+    --text: #53504b;
+    --text-soft: #716d67;
+    --accent: #ff4a96;
+    --accent-soft: rgba(255, 74, 150, 0.12);
+    --lift-bg: #efece6;
+    --lift-border: #e0dcd4;
+    --navy: #2c3e50;
+    --mustard: #c4a35a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Inter, Arial, sans-serif;
+    background: #d4d2cc;
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.2;
+    background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 0);
+    background-size: 8px 8px;
+    z-index: 0;
+  }
+  .layout { display: flex; height: 100vh; }
+
+  .markers-panel {
+    width: 310px;
+    background: #2c3e50;
+    color: #f7f5f1;
+    padding: 1.75rem 1rem;
+    overflow-y: auto;
+  }
+  .markers-panel h2 {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #a0b0c0;
+    margin: 0 0.5rem 1.15rem;
+    font-weight: 600;
+  }
+  .marker {
+    padding: 0.9rem 0.95rem;
+    margin-bottom: 0.4rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.12s ease;
+  }
+  .marker:hover { background: rgba(255,255,255,0.06); }
+  .marker.active { background: var(--accent); }
+  .marker .num {
+    font-size: 0.65rem;
+    color: #c4a35a;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.25rem;
+  }
+  .marker.active .num { color: #fff; }
+  .marker .label { font-size: 0.88rem; line-height: 1.4; }
+
+  .proof-panel {
+    flex: 1;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.05), transparent 35%),
+      radial-gradient(circle at 80% 10%, rgba(255,255,255,0.04), transparent 28%),
+      radial-gradient(circle at 60% 80%, rgba(255,255,255,0.035), transparent 32%),
+      repeating-linear-gradient(0deg, transparent 0px, transparent 39px, rgba(255,255,255,0.043) 39px, rgba(255,255,255,0.043) 40px),
+      repeating-linear-gradient(90deg, transparent 0px, transparent 59px, rgba(255,255,255,0.02) 59px, rgba(255,255,255,0.02) 60px),
+      linear-gradient(rgb(212, 210, 204), rgb(203, 202, 195) 52%, rgb(195, 193, 186));
+    padding: 2.75rem 3rem;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+  }
+  .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 0.55rem;
+    font-weight: 600;
+  }
+  .proof-panel h1 {
+    font-family: "Archivo Black", "Arial Black", sans-serif;
+    font-size: 1.9rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.35rem;
+    line-height: 1.1;
+    color: var(--text);
+  }
+  .role { color: var(--text-soft); font-size: 1rem; margin-bottom: 2rem; }
+
+  .lift {
+    background: var(--lift-bg);
+    border: 1px solid var(--lift-border);
+    border-radius: 10px;
+    padding: 1rem 1.15rem;
+    margin-bottom: 1.75rem;
+    max-width: 40rem;
+  }
+  .lift-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.45rem;
+  }
+  .lift-text {
+    font-size: 1.04rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .proof h3 {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-soft);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .proof .title {
+    font-family: "Archivo Black", "Arial Black", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 0.85rem;
+    line-height: 1.2;
+  }
+  .proof p {
+    font-size: 1.02rem;
+    line-height: 1.65;
+    margin-bottom: 0.9rem;
+    max-width: 38rem;
+    color: var(--text);
+  }
+  .replica {
+    margin-top: 1.4rem;
+    padding: 1rem 1.15rem;
+    background: #efece6;
+    border-left: 3px solid var(--mustard);
+    border-radius: 0 10px 10px 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--text-soft);
+    max-width: 38rem;
+  }
+  .replica strong { color: var(--text); font-weight: 600; }
+
+  .footer-note {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e0dcd4;
+    font-size: 0.78rem;
+    color: var(--text-soft);
+    max-width: 38rem;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  @media (max-width: 860px) {
+    body { height: auto; overflow: auto; }
+    .layout { flex-direction: column; height: auto; }
+    .markers-panel { width: 100%; order: -1; }
+    .proof-panel { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <div class="markers-panel">
+    <h2>Steps</h2>
+    <div id="markers"></div>
+  </div>
+
+  <div class="proof-panel">
+    <div class="eyebrow">Resume trail</div>
+    <h1>Director, Internal Communications</h1>
+    <div class="role">Cisco · AI Software & Platform</div>
+
+    <div class="lift">
+      <div class="lift-label">From the job description</div>
+      <div class="lift-text" id="job"></div>
+    </div>
+
+    <div class="proof" id="body"></div>
+
+    <div class="footer-note">
+      Julie Flannery Allen · jflanneryallen@gmail.com · <a href="https://flanneryallen.com">flanneryallen.com</a><br>
+      Public and replica evidence only. Full vault remains private.
+    </div>
+  </div>
+</div>
+
+<script>
+const trail = [
+  {
+    id: "ai-strategy",
+    num: "01",
+    label: "Lead strategic internal communications connecting AI vision to the broader journey",
+    job: "Develop and lead strategic internal communications connecting AI vision, technology strategy, business priorities, organizational transformation, and employee experience to Cisco’s broader AI journey.",
+    title: "Cisco AI Messaging Framework",
+    body: `<p>When ChatGPT landed, Cisco had 20+ business units and dozens of executives saying different things about AI. I built the messaging framework that kept the company coherent.</p>
+           <p>Shifted the conversation from “what AI is” to “what AI does for humans.” The framework became the foundation for Cisco’s AI Readiness Index and cisco.com/ai. It still runs without me.</p>`,
+    replica: "<strong>Replica.</strong> Strategy one-pager structure (public version on flanneryallen.com). Full cascade and executive language stayed internal."
+  },
+  {
+    id: "exec-advice",
+    num: "02",
+    label: "Advise senior leaders; shape narratives, keynotes, town halls",
+    job: "Advise and influence senior leaders as a trusted communications partner; shape narratives, keynotes, town halls, leadership presentations, and high-stakes communications.",
+    title: "Executive narrative systems + patents",
+    body: `<p>First communicator at Cisco to receive a patent. Narrative measurement framework and related work on context-aware systems. I treated language as infrastructure, not decoration.</p>
+           <p>Advised on high-stakes moments by making the story already exist in the system rather than summarizing after the fact. Same pattern now at Principal AI: trails that make intent explicit and verifiable.</p>`,
+    replica: "<strong>Replica.</strong> Public patents and the AI messaging case study. Speaker notes and full decks remain private."
+  },
+  {
+    id: "modernize-ai",
+    num: "03",
+    label: "Modernize communications with generative AI, data, and automation",
+    job: "Modernize how communications are created, delivered, personalized, and measured using generative AI, data, analytics, automation, and emerging technologies.",
+    title: "Narrative Agent prototypes + Principal AI",
+    body: `<p>Built working prototypes (Narrative Agent, Story Signal, ClaimValidator) that treat storytelling instincts as software. Narrative algebra: propagate, validate, compose, resonate, cover, drift.</p>
+           <p>Co-founded Principal AI to make human-verified trails the unit of accountability when agents write code. Directly relevant to AI-forward communications tooling.</p>`,
+    replica: "<strong>Replica.</strong> Live demos and public case studies on flanneryallen.com. Code and full system docs available under NDA."
+  },
+  {
+    id: "listening",
+    num: "04",
+    label: "Lead employee listening and engagement",
+    job: "Lead employee listening and engagement; identify organizational themes and improve employee experience.",
+    title: "Global employee communications (Cisco)",
+    body: `<p>Led communications for 80,000 employees during the ChatGPT transformation. Built listening loops and cascade mechanisms so leadership was not the last to know.</p>
+           <p>Voice guides, manager enablement, and measurement that treated narrative coherence as a metric, not a feeling.</p>`,
+    replica: "<strong>Replica.</strong> Public case study on site. Full listening reports and voice system stayed confidential."
+  },
+  {
+    id: "experience",
+    num: "05",
+    label: "12+ years advising executives and engineering audiences; AI-forward",
+    job: "Comfort advising executives, communicating with engineering audiences, and experimenting with AI-powered communications tools. 12+ years in tech/product/internal/executive communications.",
+    title: "Career pattern",
+    body: `<p>Agency (narrative compression at scale) → Cisco (enterprise AI messaging + first communicator patent) → Principal AI (supervision infrastructure for AI-generated work). Systematic domain mastery that ends in simple, clear experiences.</p>
+           <p>Patents filed years ahead of consensus (ambient computing 2019, AI collaboration pre-ChatGPT, agent supervision 2025). Engineering audiences already used the systems.</p>`,
+    replica: "<strong>Replica.</strong> About and work sections on flanneryallen.com. Full patent list public."
+  }
+];
+
+const markersEl = document.getElementById("markers");
+const jobEl = document.getElementById("job");
+const bodyEl = document.getElementById("body");
+
+function renderMarker(m, active) {
+  const div = document.createElement("div");
+  div.className = "marker" + (active ? " active" : "");
+  div.innerHTML = `<div class="num">${m.num}</div><div class="label">${m.label}</div>`;
+  div.onclick = () => select(m.id);
+  return div;
+}
+
+function select(id) {
+  const m = trail.find(x => x.id === id);
+  if (!m) return;
+  jobEl.textContent = m.job;
+  bodyEl.innerHTML = `<h3>Evidence</h3><div class="title">${m.title}</div>${m.body}<div class="replica">${m.replica}</div>`;
+  markersEl.innerHTML = "";
+  trail.forEach(item => markersEl.appendChild(renderMarker(item, item.id === id)));
+}
+
+select(trail[0].id);
+</script>
+</body>
+</html>
