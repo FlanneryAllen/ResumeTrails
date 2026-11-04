@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Trail</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #d4d2cc;
+    --surface: #f7f5f1;
+    --text: #53504b;
+    --text-soft: #716d67;
+    --accent: #ff4a96;
+    --navy: #2c3e50;
+    --mustard: #c4a35a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Inter, Arial, sans-serif;
+    background: #d4d2cc;
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.18;
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0);
+    background-size: 8px 8px;
+    z-index: 0;
+  }
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4.5rem 1.5rem 3rem;
+  }
+  .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+  }
+  h1 {
+    font-family: "Archivo Black", "Arial Black", sans-serif;
+    font-size: 2.6rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 0.75rem;
+  }
+  .sub {
+    font-size: 1.1rem;
+    color: var(--text-soft);
+    line-height: 1.5;
+    margin-bottom: 2.5rem;
+    max-width: 32rem;
+  }
+  .card {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .tab {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-soft);
+    background: transparent;
+    border: none;
+    font-family: inherit;
+  }
+  .tab.active {
+    background: var(--accent);
+    color: white;
+  }
+  textarea, input[type="url"] {
+    width: 100%;
+    border: 1px solid #e0dcd4;
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    font-family: Inter, sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: #faf8f5;
+    resize: vertical;
+  }
+  textarea { min-height: 160px; }
+  input[type="url"] { height: 48px; }
+  .hidden { display: none; }
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  .hint {
+    font-size: 0.78rem;
+    color: var(--text-soft);
+  }
+  button.primary {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 1.4rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button.primary:hover { filter: brightness(1.05); }
+  .example {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: var(--text-soft);
+  }
+  .example a { color: var(--accent); text-decoration: none; }
+  .example a:hover { text-decoration: underline; }
+  footer {
+    margin-top: 3rem;
+    font-size: 0.78rem;
+    color: var(--text-soft);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Resume trail</div>
+  <h1>Drop a job description.<br>Get the trail.</h1>
+  <p class="sub">Paste the posting or drop a URL. The vault is searched. A one-page trail is built that maps each major bullet to evidence.</p>
+
+  <div class="card">
+    <div class="tabs">
+      <button class="tab active" data-tab="text">Paste text</button>
+      <button class="tab" data-tab="url">Drop a URL</button>
+    </div>
+
+    <div id="text-panel">
+      <textarea id="jd" placeholder="Paste the job description here…"></textarea>
+    </div>
+    <div id="url-panel" class="hidden">
+      <input type="url" id="jd-url" placeholder="https://…" />
+    </div>
+
+    <div class="actions">
+      <span class="hint">Only public and replica evidence is used.</span>
+      <button class="primary" id="generate">Generate trail</button>
+    </div>
+  </div>
+
+  <div class="example">
+    Example: <a href="sites/cisco-dir-internal-comms.html">Cisco Director, Internal Communications</a>
+  </div>
+
+  <footer>
+    Julie Flannery Allen · <a href="https://flanneryallen.com">flanneryallen.com</a>
+  </footer>
+</div>
+
+<script>
+const tabs = document.querySelectorAll(".tab");
+const textPanel = document.getElementById("text-panel");
+const urlPanel = document.getElementById("url-panel");
+
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    if (tab.dataset.tab === "text") {
+      textPanel.classList.remove("hidden");
+      urlPanel.classList.add("hidden");
+    } else {
+      textPanel.classList.add("hidden");
+      urlPanel.classList.remove("hidden");
+    }
+  });
+});
+
+document.getElementById("generate").addEventListener("click", () => {
+  const isText = !textPanel.classList.contains("hidden");
+  const value = isText
+    ? document.getElementById("jd").value.trim()
+    : document.getElementById("jd-url").value.trim();
+
+  if (!value) {
+    alert("Paste a job description or drop a URL.");
+    return;
+  }
+
+  // Placeholder for the real generator.
+  // In the full platform this calls the backend / skill that walks the vault
+  // and writes a new HTML file, then redirects to it.
+  alert("Trail generation is wired to the skill and vault.\n\nFor the live example, open the Cisco trail.");
+  // window.location.href = "sites/cisco-dir-internal-comms.html";
+});
+</script>
+</body>
+</html>
